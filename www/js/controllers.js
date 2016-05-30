@@ -9,21 +9,27 @@ angular.module('starter.controllers', [])
     console.log('Ionic update called');
     deploy.update().then(function(res) {
       console.log('Ionic Deploy: Update Success! ', res);
+      $scope.checkingForUpdate = false;
     }, function(err) {
       console.log('Ionic Deploy: Update error! ', err);
+      $scope.checkingForUpdate = false;
     }, function(prog) {
       console.log('Ionic Deploy: Progress... ', prog);
+      $scope.checkingForUpdate = false;
     });
   };
 
   // Check Ionic Deploy for new code
   $scope.checkForUpdates = function() {
+    $scope.checkingForUpdate = true;
     console.log('Ionic Deploy: Checking for updates');
     deploy.check().then(function(hasUpdate) {
       console.log('Ionic Deploy: Update available: ' + hasUpdate);
+      $scope.checkingForUpdate = false;
       $scope.hasUpdate = hasUpdate;
     }, function(err) {
       console.error('Ionic Deploy: Unable to check for updates', err);
+      $scope.checkingForUpdate = false;
     });
   }
 

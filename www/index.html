@@ -2,7 +2,11 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <meta name="viewport" 
+      content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <meta http-equiv="Content-Security-Policy" 
+      content="default-src *; script-src &apos;self&apos; &apos;unsafe-inline&apos; &apos;unsafe-eval&apos; *; style-src  &apos;self&apos; &apos;unsafe-inline&apos; *">
+
     <title></title>
 
     <link href="lib/ionic/css/ionic.css" rel="stylesheet">
@@ -30,21 +34,24 @@
   </head>
 
   <body ng-app="starter" ng-controller="MapCtrl">
-    <ion-header-bar class="bar-stable">
-      <h1 class="title">Map</h1>
+    <ion-header-bar class="bar-calm">
+      <h1 class="title">Mappy</h1>
     </ion-header-bar>
 
     <ion-content scroll="false">
       <map on-create="mapCreated(map)"></map>
     </ion-content>
 
-    <ion-footer-bar class="bar-stable">
+    <ion-footer-bar class="bar-calm">
       <a ng-click="centerOnMe()" class="button button-icon icon ion-navigate"></a>
-      <a class="button button-icon icon ion-ionic" ng-click="checkForUpdates()">
-        Check for updates
-      </a>
-      <a class="button button-pulse button-icon icon ion-arrow-down-a" ng-if="hasUpdate" ng-click="doUpdate()">
-        download update
+      <a class="button button-icon icon ion-ionic" 
+        ng-class="{&apos;spin&apos;: checkingForUpdate}" 
+        ng-click="checkForUpdates()"></a>
+      <span ng-show="!hasUpdate" class="vert-center">Check for updates</span>
+      <a class="button button-pulse button-icon icon ion-arrow-down-a" 
+        ng-if="hasUpdate" 
+        ng-click="doUpdate()">
+        <span class="vert-center">Download update</span>
       </a>
     </ion-footer-bar>
   </body>
