@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('MapCtrl', function($scope, $ionicLoading) {
+.controller('MapCtrl', function($scope, $ionicLoading, $ionicAnalytics) {
 
   // Ionic deploy code
   var deploy = new Ionic.Deploy();
@@ -8,28 +8,63 @@ angular.module('starter.controllers', [])
   $scope.doUpdate = function() {
     console.log('Ionic update called');
     deploy.update().then(function(res) {
+      $scope.checkingForUpdate = false;
+      // debug
       console.log('Ionic Deploy: Update Success! ', res);
-      $scope.checkingForUpdate = false;
+      $ionicAnalytics.track('Event', {
+        msg: 'Ionic Deploy: Update Success! ', 
+        'res': res,
+        checkingForUpdate: $scope.checkingForUpdate
+      });
     }, function(err) {
+      $scope.checkingForUpdate = false;
+      // debug
       console.log('Ionic Deploy: Update error! ', err);
-      $scope.checkingForUpdate = false;
+      $ionicAnalytics.track('Event', {
+        msg: 'Ionic Deploy: Update error! ', 
+        err: err,
+        checkingForUpdate: $scope.checkingForUpdate
+      });
+
     }, function(prog) {
-      console.log('Ionic Deploy: Progress... ', prog);
       $scope.checkingForUpdate = false;
+      // debug
+      console.log('Ionic Deploy: Progress... ', prog);
+      $ionicAnalytics.track('Event', {
+        msg: 'Ionic Deploy: Progress... ', 
+        prog: prog,
+        checkingForUpdate: $scope.checkingForUpdate
+      });
     });
   };
 
   // Check Ionic Deploy for new code
   $scope.checkForUpdates = function() {
     $scope.checkingForUpdate = true;
+    $ionicAnalytics.track('Event', {
+      msg: 'Ionic update called'
+    });
     console.log('Ionic Deploy: Checking for updates');
     deploy.check().then(function(hasUpdate) {
-      console.log('Ionic Deploy: Update available: ' + hasUpdate);
       $scope.checkingForUpdate = false;
       $scope.hasUpdate = hasUpdate;
+      // debug
+      console.log('Ionic Deploy: Update available: ' + hasUpdate);
+      $ionicAnalytics.track('Event', {
+        msg: 'Ionic Deploy: Update available: ',
+        hasUpdate: hasUpdate, 
+        checkingForUpdate: $scope.checkingForUpdate
+      });
     }, function(err) {
-      console.error('Ionic Deploy: Unable to check for updates', err);
       $scope.checkingForUpdate = false;
+      // debug
+      console.error('Ionic Deploy: Unable to check for updates', err);
+      $ionicAnalytics.track('Event', {
+        msg: 'Ionic Deploy: Unable to check for updates',
+        err: err, 
+        checkingForUpdate: $scope.checkingForUpdate
+      });
+
     });
   }
 
