@@ -59,6 +59,7 @@ angular.module('starter.controllers', [])
       $scope.checkingForUpdate = false;
       // debug
       console.error('Ionic Deploy: Unable to check for updates', err);
+      console.log('$scope.checkingForUpdate',$scope.checkingForUpdate);
       $ionicAnalytics.track('Event', {
         msg: 'Ionic Deploy: Unable to check for updates',
         err: err, 

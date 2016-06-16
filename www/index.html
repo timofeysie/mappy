@@ -42,7 +42,7 @@
 
     <ion-footer-bar class="bar-calm">
       <a ng-click="centerOnMe()" class="button button-icon icon ion-navigate"></a>
-      <a class="button button-icon icon ion-ionic" ng-class="{&apos;spin&apos;: checkingForUpdate}" ng-click="checkForUpdates()"></a>
+      <a class="button button-icon icon ion-ionic" ng-class="{'spin': checkingForUpdate}" ng-click="checkForUpdates()"></a>
       <span ng-show="!hasUpdate" class="vert-center">Check for updates</span>
       <a class="button button-pulse button-icon icon ion-arrow-down-a" ng-if="hasUpdate" ng-click="doUpdate()">
         <span class="vert-center">Download update</span>
